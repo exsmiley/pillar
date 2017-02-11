@@ -1,6 +1,6 @@
 import requests
 import copy
-from pymongo import MongoClient
+from dbagent import *
 
 
 def get_state_senators(stateAbbrv):
@@ -74,25 +74,11 @@ def load_recent_bills():
     return committees
 
 
-def get_main_db():
-    """
-    Gets DB object to be able insert into
-    """
-    user = "master"
-    pwd = "m4st3r"
-    dbname = "pillar"
-
-    client = MongoClient("ds149059.mlab.com", 49059)
-    db = client[dbname]
-    db.authenticate(user, pwd)
-    return db
-
-
 def add_recent_bills(committee_map):
     """
     Clears all recent bills and replaces them. Adds to the collection of all bills
     """
-    db = get_main_db()
+    db = get_main_db(read_only=True)
     recent = db.recent
     bills = db.bills
 
@@ -131,4 +117,4 @@ def main():
     # add_recent_bills(com)
     print len(get_all_recent_bills())
 
-main()
+# main()
