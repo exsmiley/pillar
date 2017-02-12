@@ -77,3 +77,5 @@ def validate_user(email, pwd):
     users = db.users
     exists = users.find({"email": email, "pwd": hash_pwd})
     return exists.count() == 1
+
+add_topics_for_user("bob@bob.com", ['Ways and Means', 'Finance', "Indian Affairs"])

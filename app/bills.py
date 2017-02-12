@@ -124,7 +124,7 @@ def get_recent_bills_by_committee():
     for b in cursor:
         bill_copy = copy.deepcopy(b)
         del bill_copy["_id"]
-        c = bill_copy['committees'].replace('House', '').replace('Senate', '').replace('&#39;', '\'').strip()
+        c = bill_copy['committees'].replace('House', '').replace('Senate', '').replace('&#39;', '\'').replace('Committee', "").strip()
 
         try:
             com[c].append(bill_copy)
@@ -172,6 +172,7 @@ def text_message_body(user, topics):
     """
     try:
         name = user['email'][:user['email'].index('@')]
+        print name
     except:
         name = user['email']
 
@@ -185,7 +186,7 @@ def text_message_body(user, topics):
         topic_str = ", ".join(topics[:-1]) + ", and " + topics[-1]
 
     link = "https://google.com"
-    message = "Hi %s! New developments in the %s! %s" % (user['email'], topic_str, link)
+    message = "Hi %s! New developments in %s! %s" % (name, topic_str, link)
     return message
 
 
@@ -193,13 +194,13 @@ def send_texts_to_users():
     """
     Sends texts to all users based on all recent bills
     """
-    comm = get_recent_bills_by_committee()
+    comm = json.loads(get_recent_bills_by_committee())
 
     # now get all users
     db = get_main_db()
     users = db.users
     user_iter = users.find({"phone number": {"$ne": "null"}})
-
+    
     for user in user_iter:
         topics = []
 
@@ -209,6 +210,7 @@ def send_texts_to_users():
 
         if len(topics) > 0:
             message = text_message_body(user, topics)
+            print message
             try:
                 send_message(user['phone'], message)
             except:
@@ -224,4 +226,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    send_texts_to_users()
