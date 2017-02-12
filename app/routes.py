@@ -67,6 +67,14 @@ def dashboard():
     #else:
     return render_template('dashboard.html')
 
+@app.route('/legislation', methods=['POST', 'GET'])
+def legislation():
+    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
+    #new_acc = add_new_user(email, pwd, phone)
+    #if new_acc:
+    #    return redirect("/main", code=302)
+    #else:
+    return render_template('legislation.html')
 
 # other API functions
 @app.route('/api/get_topics')

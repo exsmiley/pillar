@@ -3,13 +3,38 @@
 <h2>Legislation You Might Be Interested In</h2>
 
 <link href="static/css/table.css" rel="stylesheet">
+<script src="static/tabScript.js"></script>
 
-<table>
-	<tr><th align="center">Legislation</th><th align="center">Issue</th><th align="center">Description</th><th width="18%"></th></tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+<ul class="tab">
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Current')">Current</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Previous')">Previous</a></li>
+</ul>
+
+<div id="Current" class="active" height="500px" overflow="scroll">
+  <table>
+	<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th></th></tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
 </table>
+</div>
+
+<div id="Previous" class="tabcontent" height="500px" overflow="scroll">
+  <table>
+	<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th></th></tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+</table> 
+</div>
+
+
+<!-- <table>
+	<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th width="14%"></th></tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
+</table> -->
 
 <!-- <table>
 	<tr><th align="center">Legislation</th><th align="center">Issue</th><th align="center">Description</th></tr>
