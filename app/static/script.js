@@ -33,11 +33,12 @@ var categories=["Agriculture and Food",
 "Sports and Recreation",
 "Taxation",
 "Transportation and Public Works",
-"Water Resources Development"]
+"Water Resources Development",
+]
 
 
 $.each(categories,function(index,value){
-    var checkbox="<label for="+value+">"+value+"</label><input type='checkbox' id="+value+" value="+value+" name="+value+"> <br>"
+    var checkbox="<input type='checkbox' id="+value+" value="+value+" name="+value+"><label for="+value+">"+value+"</label> <br>"
     $(".checkBoxContainer").append($(checkbox));
 })
 

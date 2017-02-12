@@ -3,7 +3,6 @@
   <h2>Please Sign Up</h2>
   <br>
   <!--<script src="{{ url_for('static', filename='script.js') }}"></script>-->
-  <script src="/static/script.js"></script>
 
    <div class="container">
  
@@ -12,6 +11,7 @@
              <input type="email" name="username" class="form-control" placeholder="Email address" required autofocus>
              <input type="Password" name="password" class="form-control" placeholder="Password" required>
              <input type="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+             <!--
              <datalist name="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
@@ -64,7 +64,7 @@
 				<option value="WV">West Virginia</option>
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
-			</datalist>
+			</datalist> -->
 
 			<!--<input type="-->
 			<select list="state" class="form-control" placeholder="State" required>
@@ -122,13 +122,15 @@
 				<option value="WY">Wyoming</option>
 			</select>
 
-			<input type="text" id="ajax" list="state" placeholder="State" class="form-control" required>
+			<!-- <input type="text" id="ajax" list="state" placeholder="State" class="form-control" required> -->
 			<!--<input type="checkbox" name="issues" value="AnimalRights">Animal Rights<br>
 			<input type="checkbox" name="issues" value="Environment">Environment<br>
 			<input type="checkbox" name="issues" value="Environment">Education<br>
 			<input type="checkbox" name="issues" value="AnimalRights">Tax Policy<br>
 			<input type="checkbox" name="issues" value="Environment">Military/Veterans<br>
 			<input type="checkbox" name="issues" value="Environment">Military/Veterans<br>-->
+			<h4> Select issues you care about: </h4>
+
 			<div class="checkBoxContainer"> </div>
 
  
