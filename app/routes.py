@@ -70,6 +70,12 @@ def dashboard():
         return redirect('/')
     return render_template('dashboard.html')
 
+@app.route('/act', methods=['POST', 'GET'])
+def act():
+    if not 'username' in session:
+        return redirect('/')
+    return render_template('act.html')
+
 @app.route('/legislation', methods=['POST', 'GET'])
 def legislation():
     #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
