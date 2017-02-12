@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, make_response, session
+from flask import Flask, render_template, request, jsonify, make_response, session, redirect, url_for
 import hashlib
 from bills import *
 from dbagent import *
@@ -23,45 +23,80 @@ def add_header(r):
 @app.route('/')
 def home():
     if 'username' in session:
-        return redirect("/main", code=302)
+        return render_template("dashboard.html")
     return render_template('home.html')
 
 @app.route('/signup')
 def signup_render():
     return render_template('signup.html')
 
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/')
+
 
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    name, pwd, phone, zipcode = request.form['name'], request.form['pwd'], request.form['phone'], request['zip']
+    name, pwd, phone, zipcode = request.json['email'], request.json['email'], request.json['phone'], request.json['zipcode']
     new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
         session['username'] = request.form['name']
-        return redirect("/main", code=302)
+        return jsonify({"route": "/"})
     else:
-        return render_template('home.html')
+        return jsonify({"route": "/signup"})
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    name, pwd = request.form['name'], request.form['pwd']
-    new_acc = validate_user(email, pwd, phone)
+    email, pwd = request.json['email'], request.json['password']
+    new_acc = validate_user(email, pwd)
     if new_acc:
-        session['username'] = request.form['name']
-        return redirect("/main", code=302)
-    else:
-        return render_template('home.html')
+        session['username'] = request.json['email']
 
+        return jsonify({"route": "/dashboard"})
+        # return redirect("/dashboard", code=302)
+    else:
+        return jsonify({"route": "/"})
+        # return render_template('home.html')
+
+@app.route('/dashboard', methods=['POST', 'GET'])
+def dashboard():
+    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
+    #new_acc = add_new_user(email, pwd, phone)
+    #if new_acc:
+    #    return redirect("/main", code=302)
+    #else:
+    return render_template('dashboard.html')
+
+@app.route('/legislation', methods=['POST', 'GET'])
+def legislation():
+    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
+    #new_acc = add_new_user(email, pwd, phone)
+    #if new_acc:
+    #    return redirect("/main", code=302)
+    #else:
+    return render_template('legislation.html')
 
 # other API functions
+@app.route('/api/get_topics')
+def get_topics():
+    email, topics = session['username'], request.form['topics']
+    add_topics_for_user(email, topics)
+
 @app.route('/api/update_topics', methods=['POST'])
 def update_topics():
-    name, topics = request.form['name'], request.form['topics']
+    email, topics = session['username'], request.form['topics']
     add_topics_for_user(email, topics)
 
 @app.route('/api/get_recent')
 def get_recent_api():
     return get_all_recent_bills()
+
+@app.route('/api/test', methods=['POST'])
+def tester():
+    print request.json
+    return jsonify(request.json)
   
 
 if __name__ == '__main__':

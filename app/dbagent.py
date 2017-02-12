@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import hashlib
+import json
 
 def get_main_db(read_only=True):
     """
@@ -35,6 +36,7 @@ def add_new_user(email, pwd, phone, zipcode):
 
     db = get_main_db(read_only=False)
     users = db.users
+    users.delete_many({})
 
     total = users.find({"email": email})
 
@@ -53,6 +55,18 @@ def add_topics_for_user(email, topics):
     users.update_one({"email": email}, {"$set": {"topics": topics}})
 
 
+def get_topics_for_user(email):
+    """
+    Adds the topics for the user
+    """
+    db = get_main_db()
+    users = db.users
+    results = users.find({"email": email})
+
+    for i in results:
+        return json.dumps(i['topics'])
+
+
 def validate_user(email, pwd):
     """
     Checks if user exists in the database
@@ -63,3 +77,5 @@ def validate_user(email, pwd):
     users = db.users
     exists = users.find({"email": email, "pwd": hash_pwd})
     return exists.count() == 1
+
+add_topics_for_user("bob@bob.com", ['Ways and Means', 'Finance', "Indian Affairs"])

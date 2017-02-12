@@ -1,40 +1,75 @@
 
+Vue.use(VueRouter);
+
+var router = new VueRouter() ;
 var apiURL = 'http://localhost:5000/api/get_recent';
 
+var loginapp = new Vue ({
+    el: '#loginapp',
+    data: {
+        email: "",
+        password: ""
+    },
+    methods: {
+        onSubmit: function(e) {
+            this.$http.post('/api/login', JSON.stringify({"email": this.email, "password": this.password})).then(function(post){
+                console.log(post['body']['route'])
+                var r = post['body']['route']
+                router.go(r)
+                /// Something like.... router.redirect('/')
+            });
+        }
+    },
+    delimiters: ['{/', '/}']
+})
+
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    bills: [
+      { text: 'i am a bill' },
+      { text: 'i am a bill too' },
+      { text: 'oops wrong place i am a bob' }
+    ]
+  },
+  delimiters: ['{/', '/}']
+})
+
 $(document).ready(function(){
-var categories=["  Agriculture and Food",
-"Animals",
-"Armed Forces and National Security",
-"Arts, Culture, Religion",
-"Civil Rights and Liberties, Minority Issues",
-"Commerce",
-"Congress",
-"Crime and Law Enforcement",
-"Economics and Public Finance",
-"Education",
-"Emergency Management",
-"Energy",
-"Environmental Protection",
-"Families",
-"Finance and Financial Sector",
-"Foreign Trade and International Finance",
-"Government Operations and Politics",
-"Health",
-"Housing and Community Development",
-"Immigration",
-"International Affairs",
-"Labor and Employment",
-"Law",
-"Native Americans",
-"Public Lands and Natural Resources",
-"Science, Technology, Communications",
-"Social Sciences and History",
-"Social Welfare",
-"Sports and Recreation",
-"Taxation",
-"Transportation and Public Works",
-"Water Resources Development",
-]
+// var categories=["  Agriculture and Food",
+// "Animals",
+// "Armed Forces and National Security",
+// "Arts, Culture, Religion",
+// "Civil Rights and Liberties, Minority Issues",
+// "Commerce",
+// "Congress",
+// "Crime and Law Enforcement",
+// "Economics and Public Finance",
+// "Education",
+// "Emergency Management",
+// "Energy",
+// "Environmental Protection",
+// "Families",
+// "Finance and Financial Sector",
+// "Foreign Trade and International Finance",
+// "Government Operations and Politics",
+// "Health",
+// "Housing and Community Development",
+// "Immigration",
+// "International Affairs",
+// "Labor and Employment",
+// "Law",
+// "Native Americans",
+// "Public Lands and Natural Resources",
+// "Science, Technology, Communications",
+// "Social Sciences and History",
+// "Social Welfare",
+// "Sports and Recreation",
+// "Taxation",
+// "Transportation and Public Works",
+// "Water Resources Development",
+// ]
+var categories = ['Ways and Means', 'Oversight and Government Reform', 'Natural Resources', 'Energy and Natural Resources', 'Indian Affairs', 'Small Business and Entrepreneurship', 'Transportation and Infrastructure', 'Administration', 'Judiciary', 'Homeland Security and Governmental Affairs', 'Energy and Commerce', 'Health, Education, Labor, and Pensions', 'Banking, Housing, and Urban Affairs', "Veterans' Affairs", 'Commerce, Science, and Transportation', 'Education and the Workforce', 'Armed Services', 'Agriculture', 'Foreign Relations', 'Finance']
 
 
 $.each(categories,function(index,value){
