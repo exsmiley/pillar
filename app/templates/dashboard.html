@@ -2,51 +2,83 @@
 {% block content %}
 
 <div class="header clearfix">
-    <h3 class="text-muted">PILLAR</h3>
+  <h3 class="text-muted">PILLAR</h3>
 </div>
 <hr>
-<h2>Legislation You Might Be Interested In</h2>
 
-<link href="static/css/table.css" rel="stylesheet">
-<script src="static/tabScript.js"></script>
-<div class="jumbotron">
-	<ul class="tab">
-	  <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Current')">Current</a></li>
-	  <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Previous')">Previous</a></li>
-	</ul>
+<h2>Relevant Bills</h2>
+<br>
 
-	<div id="Current" class="active" height="500px" overflow="scroll">
-	  <table>
-		<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th></th></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-	</table>
-	</div>
+<ul class="nav nav-pills">
+  <li class="active"><a data-toggle="pill" href="#upcoming">Upcoming</a></li>
+  <li><a data-toggle="pill" href="#passed">Recently Passed</a></li>
+</ul>
 
-	<div id="Previous" class="tabcontent" height="500px" overflow="scroll">
-	  <table>
-		<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th></th></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-		<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/legislation" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td></tr>
-	</table> 
-	</div>
-	<hr>
-	<a href="/logout"><button class="btn btn-lg btn-primary btn-block" type="button">Log Out</button></a>
+<div class="tab-content">
+  <div id="upcoming" class="tab-pane fade in active">
+    <div class="container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Bill Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Energy</td>
+            <td>Make Infinite Energy</td>
+          </tr>
+          <tr>
+            <td>Food</td>
+            <td>Eat More</td>
+          </tr>
+          <tr>
+            <td>Happy</td>
+            <td>Gib hubs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="passed" class="tab-pane fade">
+    <div class="container">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Topic</th>
+            <th>Bill Title</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Movies</td>
+            <td>Only Watch Romcoms</td>
+            <td>Passed</td>
+          </tr>
+          <tr>
+            <td>Food</td>
+            <td>Only Eat Cake</td>
+            <td>Failed</td>
+          </tr>
+          <tr>
+            <td>Dumplings</td>
+            <td>Give City Key to Dumplings</td>
+            <td>Passed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<!-- <table>
-	<tr><th align="center">Legislation</th><th align="center">Issue</th><th>Status</th><th align="center">Description</th><th width="14%"></th></tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></td><tr>
-</table> -->
+<hr>
+<a href="/logout"><button class="btn btn-lg btn-primary btn-block" type="button">Log Out</button></a>
+</div>
 
-<!-- <table>
-	<tr><th align="center">Legislation</th><th align="center">Issue</th><th align="center">Description</th></tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample<div float="right" right="0%" padding="10px"><a href="/" class="btn btn-lg btn-success" background-color="#b30000" role="button">View</a></div></td><tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a class="viewButton" href="/dashboard" role="button" background-color="#b30000">View</a></td></tr>
-	<tr><td>Sample</td><td>Sample</td><td>Sample</td><td class="buttonCell"><a class="viewButton" href="/dashboard" role="button" background-color="#b30000">View</a></td></tr>
-</table> -->
+</div>
+
+
+
 {% endblock %}
