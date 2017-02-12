@@ -5,6 +5,7 @@ Created on Sat Feb 11 14:21:57 2017
 @author: VL
 """
 import requests
+import numpy as np
 import pandas as pd
 from datetime import datetime
 from bokeh.charts import Bar, Donut, show
@@ -13,7 +14,9 @@ from bokeh.models import HoverTool, SaveTool, ColumnDataSource
 from bokeh.embed import components
 from bokeh.charts.attributes import CatAttr
 from bokeh.palettes import Pastel1
-
+from bokeh.plotting import figure
+from bokeh.resources import CDN
+import bokeh.embed
 
 # comparing two senators
 def compare_politicians(name1, name2, chamberName):
@@ -131,23 +134,23 @@ def get_recent_bills_by_member(name1, chamber):
 
 twentyBills = get_recent_bills_by_member("Tim Kaine", "senate")
 source = ColumnDataSource(twentyBills)
-source.column_names
-source.data["title"]
 
 hover2 = HoverTool(
     tooltips=[
-        ("Committee", "$committees"),
-        ("Introduction Date", "$introDate"),
-        ("Title", "$title"),
-        ("Number", "$number")
+        ("Title", "@title"),
+        ("Number", "@number")
     ])
 
-p = figure(plot_width=400, plot_height=400, x_axis_type="datetime")
+p = figure(plot_width=950, plot_height=400, x_axis_type="datetime", y_range = list(np.unique(source.data["committees"])))
 p.add_tools(hover2)
 
-for committee in twentyBills["committees"]:
-    for color in Pastel1:
-        p.circle(x=source.data["introDate"], y=twentyBills.index[twentyBills.committees == committee], size=20,
-                 fill_color=Pastel1[color])
+p.circle(x="introDate", y="committees", size=20, fill_color=Pastel1[8], source = source)
 
 show(p)
+
+script, div = components(p)
+
+html_barplot = file_html(barplot, CDN, "barplot")
+html_piechart = file_html(pie_chart, CDN, "piechart")
+
+html_recent20 = file_html(p, CDN, "recent")
