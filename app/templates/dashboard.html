@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-
 <div class="header clearfix">
   <h3 class="text-muted">PILLAR</h3>
 </div>
@@ -52,11 +51,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Movies</td>
-            <td>Only Watch Romcoms</td>
-            <td>Passed</td>
+        <div id="billsapp">
+          <tr v-for="bill in bills">
+            <td>{/ bill.topic /}</td>
+            <td>{/ bill.title /}</td>
+            <td>{/ bill.result /}</td>
           </tr>
+          <!--
           <tr>
             <td>Food</td>
             <td>Only Eat Cake</td>
@@ -67,18 +68,16 @@
             <td>Give City Key to Dumplings</td>
             <td>Passed</td>
           </tr>
+          -->
+        </div>
         </tbody>
       </table>
     </div>
   </div>
 </div>
 
-<hr>
 <a href="/logout"><button class="btn btn-lg btn-primary btn-block" type="button">Log Out</button></a>
 </div>
-
-</div>
-
 
 
 {% endblock %}
