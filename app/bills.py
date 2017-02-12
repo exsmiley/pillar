@@ -2,21 +2,22 @@ import requests
 import copy
 import json
 from dbagent import *
+from sms import *
+
+
+api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
+headers = {'X-API-Key': api_key}
 
 
 def get_state_senators(stateAbbrv):
     """
     Gets the state senators information for the state
     """
-    api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
-    
     state = stateAbbrv
     chamber = "senate"
     senators = {}
     
     url = "https://api.propublica.org/congress/v1/members/%s/%s/current.json" % (chamber, state)
-
-    headers = {'X-API-Key': api_key}
 
     results = requests.get(url, headers=headers).json()['results']
     
@@ -35,8 +36,6 @@ def load_recent_bills():
     Gets the 20 most recent bills in the House and Senate and
     maps each committee to the bills associated with them
     """
-    api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
-
     congress = "115"
     chambers = ["house", "senate"]
     status = "introduced"
@@ -45,8 +44,6 @@ def load_recent_bills():
     # populates each committee with the recent bills for it
     for chamber in chambers:
         url = "https://api.propublica.org/congress/v1/%s/%s/bills/%s.json" % (congress, chamber, status)
-
-        headers = {'X-API-Key': api_key}
 
         results = requests.get(url, headers=headers).json()['results'][0]
 
@@ -79,7 +76,7 @@ def add_recent_bills(committee_map):
     """
     Clears all recent bills and replaces them. Adds to the collection of all bills
     """
-    db = get_main_db(read_only=True)
+    db = get_main_db(read_only=False)
     recent = db.recent
     bills = db.bills
 
@@ -115,21 +112,116 @@ def get_all_recent_bills():
     return json.dumps(bills)
 
 
+def get_recent_bills_by_committee():
+    """
+    Gets a list of dicts of all of the recent bills
+    """
+    db = get_main_db()
+    recent = db.recent
+    com = {}
+    cursor = recent.find()
+
+    for b in cursor:
+        bill_copy = copy.deepcopy(b)
+        del bill_copy["_id"]
+        c = bill_copy['committees'].replace('House', '').replace('Senate', '').replace('&#39;', '\'').strip()
+
+        try:
+            com[c].append(bill_copy)
+        except:
+            com[c] = [bill_copy]
+    return json.dumps(com)
+
+
 def get_my_reps(zipcode):
     """
     Gets all representatives/senators for the zip code
     """
     url = "http://whoismyrepresentative.com/getall_mems.php?zip=%s&output=json" % str(zipcode)
 
-    result = requests.get(url).json()['results']
+    people = requests.get(url).json()['results']
 
-    print result
+    reps = {}
+
+    for person in people:
+        if len(person['district']) > 0:
+            chamber, state, district = "house", person['state'], person['district']
+            url = "https://api.propublica.org/congress/v1/members/%s/%s/%s/current.json" % (chamber, state, district)
+            results = requests.get(url, headers=headers).json()['results']
+            for r in results:
+                if person['name'] == r['name']:
+                    r.update(person)
+                    reps[r['name']] = r
+        else:
+            chamber, state = "senate", person['state']
+            url = "https://api.propublica.org/congress/v1/members/%s/%s/current.json" % (chamber, state)
+            results = requests.get(url, headers=headers).json()['results']
+            for r in results:
+                if person['name'] == r['name']:
+                    r.update(person)
+                    reps[r['name']] = r
+    return reps.values()
+
+
+def text_message_body(user, topics):
+    """
+    Gets the body of the text message based on the number of topics
+    user: user object
+    topics: list of updated topics
+    @return string message
+    """
+    try:
+        name = user['email'][:user['email'].index('@')]
+    except:
+        name = user['email']
+
+    topic_str = ""
+
+    if len(topics) == 1:
+        topic_str = topics
+    elif len(topics) == 2:
+        topic_str = topics[0] + " and " + topics[1]
+    else:
+        topic_str = ", ".join(topics[:-1]) + ", and " + topics[-1]
+
+    link = "https://google.com"
+    message = "Hi %s! New developments in the %s! %s" % (user['email'], topic_str, link)
+    return message
+
+
+def send_texts_to_users():
+    """
+    Sends texts to all users based on all recent bills
+    """
+    comm = get_recent_bills_by_committee()
+
+    # now get all users
+    db = get_main_db()
+    users = db.users
+    user_iter = users.find({"phone number": {"$ne": "null"}})
+
+    for user in user_iter:
+        topics = []
+
+        for t in user["topics"]:
+            if t in comm:
+                topics.append(t)
+
+        if len(topics) > 0:
+            message = text_message_body(user, topics)
+            try:
+                send_message(user['phone'], message)
+            except:
+                pass
+
 
 
 def main():
-    # com = load_recent_bills()
-    # add_recent_bills(com)
-    print len(get_all_recent_bills())
+    # load and update stuff
+    comm = load_recent_bills()
+    add_recent_bills(comm)
+    send_texts_to_users()
 
 
-# get_my_reps(91042)
+if __name__ == '__main__':
+    main()

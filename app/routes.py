@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, make_response, session
+import hashlib
 from bills import *
 from dbagent import *
 
-app = Flask(__name__)      
+app = Flask(__name__)
+
+# set the secret key.  keep this really secret:
+app.secret_key = hashlib.sha256("I'm a cool bruh").hexdigest()
 
 @app.after_request
 def add_header(r):
@@ -18,8 +22,7 @@ def add_header(r):
 
 @app.route('/')
 def home():
-    username = request.cookies.get('username')
-    if username:
+    if 'username' in session:
         return redirect("/main", code=302)
     return render_template('home.html')
 
@@ -31,9 +34,10 @@ def signup_render():
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
-    new_acc = add_new_user(email, pwd, phone)
+    name, pwd, phone, zipcode = request.form['name'], request.form['pwd'], request.form['phone'], request['zip']
+    new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
+        session['username'] = request.form['name']
         return redirect("/main", code=302)
     else:
         return render_template('home.html')
@@ -43,6 +47,7 @@ def login():
     name, pwd = request.form['name'], request.form['pwd']
     new_acc = validate_user(email, pwd, phone)
     if new_acc:
+        session['username'] = request.form['name']
         return redirect("/main", code=302)
     else:
         return render_template('home.html')
