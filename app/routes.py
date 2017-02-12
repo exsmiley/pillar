@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, make_response, session, redirect, url_for
 import hashlib
+import os
 from bills import *
 from dbagent import *
 
@@ -23,7 +24,7 @@ def add_header(r):
 @app.route('/')
 def home():
     if 'username' in session:
-        return render_template("dashboard.html")
+        return redirect('/dashboard')
     return render_template('home.html')
 
 @app.route('/signup')
@@ -41,8 +42,12 @@ def logout():
 def signup():
     name, email, phone, zipcode, pwd = request.json['name'], request.json['email'], request.json['phone'], request.json['zipcode', request.json['password']]
     new_acc = add_new_user(email, pwd, phone, zipcode)
-    session['username'] = request.form['name']
-    return jsonify({"route": "/"})
+    if new_acc:
+        session['username'] = request.json['email']
+        return redirect('/')
+    else:
+        return redirect('/signup')
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -51,19 +56,16 @@ def login():
     if new_acc:
         session['username'] = request.json['email']
 
-        return jsonify({"route": "/dashboard"})
+        return redirect('/dashboard')
         # return redirect("/dashboard", code=302)
     else:
-        return jsonify({"route": "/"})
+        return redirect('/')
         # return render_template('home.html')
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
-    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
-    #new_acc = add_new_user(email, pwd, phone)
-    #if new_acc:
-    #    return redirect("/main", code=302)
-    #else:
+    if not 'username' in session:
+        return redirect('/')
     return render_template('dashboard.html')
 
 @app.route('/legislation', methods=['POST', 'GET'])
@@ -97,4 +99,6 @@ def tester():
   
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+    # app.run()
