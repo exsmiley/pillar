@@ -69,7 +69,7 @@ $(document).ready(function(){
 // "Transportation and Public Works",
 // "Water Resources Development",
 // ]
-var categories = ['Ways and Means', 'Oversight and Government Reform', 'Natural Resources', 'Energy and Natural Resources', 'Indian Affairs', 'Small Business and Entrepreneurship', 'Transportation and Infrastructure', 'Administration', 'Judiciary', 'Homeland Security and Governmental Affairs', 'Energy and Commerce', 'Health, Education, Labor, and Pensions', 'Banking, Housing, and Urban Affairs', u"Veterans' Affairs", 'Commerce, Science, and Transportation', 'Education and the Workforce', 'Armed Services', 'Agriculture', 'Foreign Relations', 'Finance']
+var categories = ['Ways and Means', 'Oversight and Government Reform', 'Natural Resources', 'Energy and Natural Resources', 'Indian Affairs', 'Small Business and Entrepreneurship', 'Transportation and Infrastructure', 'Administration', 'Judiciary', 'Homeland Security and Governmental Affairs', 'Energy and Commerce', 'Health, Education, Labor, and Pensions', 'Banking, Housing, and Urban Affairs', "Veterans' Affairs", 'Commerce, Science, and Transportation', 'Education and the Workforce', 'Armed Services', 'Agriculture', 'Foreign Relations', 'Finance']
 
 
 $.each(categories,function(index,value){
