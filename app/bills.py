@@ -1,5 +1,6 @@
 import requests
 import copy
+import json
 from dbagent import *
 
 
@@ -108,8 +109,21 @@ def get_all_recent_bills():
     bills = []
     cursor = recent.find()
     for b in cursor:
-        bills.append(b)
-    return bills
+        bill_copy = copy.deepcopy(b)
+        del bill_copy["_id"]
+        bills.append(bill_copy)
+    return json.dumps(bills)
+
+
+def get_my_reps(zipcode):
+    """
+    Gets all representatives/senators for the zip code
+    """
+    url = "http://whoismyrepresentative.com/getall_mems.php?zip=%s&output=json" % str(zipcode)
+
+    result = requests.get(url).json()['results']
+
+    print result
 
 
 def main():
@@ -117,4 +131,5 @@ def main():
     # add_recent_bills(com)
     print len(get_all_recent_bills())
 
-# main()
+
+# get_my_reps(91042)
