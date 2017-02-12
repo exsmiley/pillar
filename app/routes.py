@@ -23,7 +23,7 @@ def add_header(r):
 @app.route('/')
 def home():
     if 'username' in session:
-        return render_template("dashboard.html")
+        return redirect('/dashboard')
     return render_template('home.html')
 
 @app.route('/signup')
@@ -43,9 +43,9 @@ def signup():
     new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
         session['username'] = request.form['name']
-        return jsonify({"route": "/"})
+        return redirect('/')
     else:
-        return jsonify({"route": "/signup"})
+        return redirect('/signup')
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -54,19 +54,16 @@ def login():
     if new_acc:
         session['username'] = request.json['email']
 
-        return jsonify({"route": "/dashboard"})
+        return redirect('/dashboard')
         # return redirect("/dashboard", code=302)
     else:
-        return jsonify({"route": "/"})
+        return redirect('/')
         # return render_template('home.html')
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
-    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
-    #new_acc = add_new_user(email, pwd, phone)
-    #if new_acc:
-    #    return redirect("/main", code=302)
-    #else:
+    if not 'username' in session:
+        return redirect('/')
     return render_template('dashboard.html')
 
 @app.route('/legislation', methods=['POST', 'GET'])
