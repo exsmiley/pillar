@@ -44,19 +44,26 @@ def signup():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    name, pwd = request.form['name'], request.form['pwd']
+    
+    name, pwd = request.form['email'], request.form['password']
+    print name, pwd
     new_acc = validate_user(email, pwd, phone)
     if new_acc:
-        session['username'] = request.form['name']
+        session['username'] = request.form['email']
         return redirect("/main", code=302)
     else:
         return render_template('home.html')
 
 
 # other API functions
+@app.route('/api/get_topics')
+def get_topics():
+    email, topics = session['username'], request.form['topics']
+    add_topics_for_user(email, topics)
+
 @app.route('/api/update_topics', methods=['POST'])
 def update_topics():
-    name, topics = request.form['name'], request.form['topics']
+    email, topics = session['username'], request.form['topics']
     add_topics_for_user(email, topics)
 
 @app.route('/api/get_recent')
