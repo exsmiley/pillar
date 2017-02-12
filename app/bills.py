@@ -240,4 +240,5 @@ def main():
 
 
 if __name__ == '__main__':
-    send_texts_to_users()
+    # send_texts_to_users()
+    print get_my_reps(str("91042"))

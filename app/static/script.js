@@ -102,10 +102,13 @@ var act = new Vue({
   methods: {
     loadReps: function() {
         this.$http.get('/api/get_me_reps').then(function(res) {
-            this.reps = res['body']['recent']
+            console.log("blerp")
+            console.log(res['body']['reps'])
+            this.reps = res['body']['reps']
         });
     }
   },
   delimiters: ['{/', '/}']
 })
 
+act.loadReps();
