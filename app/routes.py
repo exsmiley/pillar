@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, make_response, session
+from flask import Flask, render_template, request, jsonify, make_response, session, redirect, url_for
 import hashlib
 from bills import *
 from dbagent import *
@@ -33,7 +33,7 @@ def signup_render():
 @app.route('/logout')
 def logout():
     del session['username']
-    return render_template('home.html')
+    return redirect(url_for('/'))
 
 
 # sign up/login
