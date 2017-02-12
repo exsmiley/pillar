@@ -185,7 +185,7 @@ def text_message_body(user, topics):
     else:
         topic_str = ", ".join(topics[:-1]) + ", and " + topics[-1]
 
-    link = "https://google.com"
+    link = "https://pillarapp.herokuapp.com"
     message = "Hi %s! New developments in %s! %s" % (name, topic_str, link)
     return message
 

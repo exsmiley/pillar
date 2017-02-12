@@ -8,20 +8,25 @@
 <br>
 <!--<script src="{{ url_for('static', filename='script.js') }}"></script>-->
 
-<div class="jumbotron" id="signupapp" v-on:submit.prevent="registerUser">
-	<form class="form-signup" action="/signup" method="post" role="form">
-		<input type="full name" name="full name" class="form-control" placeholder="Full Name" required>
-		<input type="email" name="username" class="form-control" placeholder="Email address" required autofocus>
-		<input type="phone" name="phone" class="form-control" placeholder="Phone Number (for text alerts)" required>
-		<input type="zipcode" name="zipcode" class="form-control" placeholder="ZIP Code">
-		<input type= "password" name="password" class="form-control" placeholder="Password" required>
+<div class="jumbotron" id="signupapp">
+	<form class="form-signup" v-on:submit.prevent="registerUser">
+		<input type="full name" name="full name" class="form-control" placeholder="Full Name" required v-model="name">
+		<input type="email" name="username" class="form-control" placeholder="Email address" required autofocus v-model="email">
+		<input type="phone" name="phone" class="form-control" placeholder="Phone Number (for text alerts)" required v-model="phone">
+		<input type="zipcode" name="zipcode" class="form-control" placeholder="ZIP Code" v-model="zipcode">
+		<input type= "password" name="password" class="form-control" placeholder="Password" required v-model="password">
 		<input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
 			<hr>
 			<div class="check">
 				<h4 style="color:#999"> Select Relevant Issues: </h4>
-					<div class="checkBoxContainer" style="text-align: left;"> </div>
+					<div class="checkBoxContainer" style="text-align: left;">
+					<div v-for='c in categories' v-on:click="toggle(c)">
+						<input type="checkbox">
+						<label for="c">{/ c /}</label>
+						</div>
+					 </div>
 					<hr>
-					<button class="btn btn-lg btn-primary btn-block" type="button">Register </button>
+					<a href="{/url/}"><button class="btn btn-lg btn-primary btn-block" role="button">Register </button></a>
 			</div>
 	</form>
 	<br>
