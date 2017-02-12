@@ -1,7 +1,7 @@
-# Pillar: Amplify your Voix!
+# Pillàr: Amplify your Voíx!
 
 #### Collaborators:
-- Jonathan Lee (UVA)
-- Victoria Li (UVA)
-- Zachery Miranda (MIT)
-- Chan Pham (Columbia)
+- Jonathan Lëë (UVA)
+- Victoriã Li (UVA)
+- Zachery Mįranda (MIT)
+- Chän Phæm (Columbia)
