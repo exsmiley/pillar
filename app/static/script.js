@@ -23,6 +23,31 @@ var loginapp = new Vue ({
     delimiters: ['{/', '/}']
 })
 
+var signupapp = new Vue ({
+    el: '#signupapp',
+    data: {
+        name: "",
+        email: "",
+        phone: "",
+        zip: "",
+        password: ""
+    },
+    methods: {
+        registerUser: function(e) {
+            this.$http.post('/api/signup', JSON.stringify({
+                "name": this.name,
+                "email": this.email,
+                "phone": this.phone,
+                "zipcode": this.zipcode,
+                "password": this.password})).then(function(post){
+                
+                /// Something like.... router.redirect('/')
+            });
+        }
+    }
+
+})
+
 var app4 = new Vue({
   el: '#app-4',
   data: {

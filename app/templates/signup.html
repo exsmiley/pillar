@@ -4,22 +4,21 @@
 <h3 class="text-muted"><a href="/">PILLAR</a></h3>
 </div>
 <hr>
-<h2>Please Sign Up</h2>
+<h2>Sign Up Below</h2>
 <br>
 <!--<script src="{{ url_for('static', filename='script.js') }}"></script>-->
 
-<div class="container jumbotron">
-	<form class="form-signin" action="/signUp" method="post" role="form">
-		<!--<h2 class="form-signin-heading">Please Sign Up </h2>-->
+<div class="jumbotron" id="signupapp" v-on:submit.prevent="registerUser">
+	<form class="form-signup" action="/signup" method="post" role="form">
 		<input type="full name" name="full name" class="form-control" placeholder="Full Name" required>
 		<input type="email" name="username" class="form-control" placeholder="Email address" required autofocus>
-		<input type="phone" name="phone" class="form-control" placeholder="Phone Number (for text alerts)">
-		<input type="zip" name="zip" class="form-control" placeholder="ZIP Code">
-		<input type= Code"Password" name="password" class="form-control" placeholder="Password" required>
-		<input type="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+		<input type="phone" name="phone" class="form-control" placeholder="Phone Number (for text alerts)" required>
+		<input type="zipcode" name="zipcode" class="form-control" placeholder="ZIP Code">
+		<input type= "password" name="password" class="form-control" placeholder="Password" required>
+		<input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
 			<hr>
 			<div class="check">
-				<h4 style="color:#999"> Select issues you care about: </h4>
+				<h4 style="color:#999"> Select Relevant Issues: </h4>
 					<div class="checkBoxContainer" style="text-align: left;"> </div>
 					<hr>
 					<button class="btn btn-lg btn-primary btn-block" type="button">Register </button>
@@ -29,4 +28,4 @@
 	
 </div>
 
-		{% endblock %}
+{% endblock %}
