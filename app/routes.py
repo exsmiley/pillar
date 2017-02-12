@@ -33,7 +33,7 @@ def signup_render():
 @app.route('/logout')
 def logout():
     del session['username']
-    return redirect(url_for('/'))
+    return redirect('/')
 
 
 # sign up/login
