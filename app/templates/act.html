@@ -5,38 +5,37 @@
 </div>
 <hr>
 <h2>Your Senators</h2>
-<!--
-<div class="panel-group">
+<div id="act">
+
+<div class="panel-group" v-for="rep in reps"">
 	<div class="panel panel-default">
-		<div class="panel-heading">Senator Name</div>
-		<div class="panel-body">blabla</div>
+		<div class="panel-heading">{/ rep['name'] /}</div>
+		<div class="panel-body">{/ rep['role'] /}</div>
 	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading">Senator Name</div>
-		<div class="panel-body">Panel Content</div>
-	</div>
+
 </div>
--->
-<!--
-<thead>
-	<tr>
-		<th>Name</th>
-		<th>Role</th>
-		<th>District</th>
-		<th>Party</th>
-		<th>Phone</th>
-	</tr>
-</thead>
-<tbody id="act">
-	<tr v-for="rep in reps">
-		<td>{/ rep[0]['name'] /}</td>
-		<td>{/ rep[0]['role'] /}</td>
-		<td>{/ rep[0]['district'] /}</td>
-		<td>{/ rep[0]['party'] /}</td>
-		<td>{/ rep[0]['phone'] /}</td>
-	</tr>
-</tbody>
+
+<table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>District</th>
+            <th>Party</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody id="act">
+			<tr v-for="rep in reps">
+			    <td>{/ rep['name'] /}</td>
+			    <td>{/ rep['role'] /}</td>
+			    <td>{/ rep['district'] /}</td>
+			    <td>{/ rep['party'] /}</td>
+			    <td>{/ rep['phone'] /}</td>
+			</tr>
+		</tbody>
 <br>
--->
+</table>
+</div>
 
 {% endblock %}
