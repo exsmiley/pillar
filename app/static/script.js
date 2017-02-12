@@ -77,3 +77,20 @@ var app4 = new Vue({
   delimiters: ['{/', '/}']
 })
 
+var upcoming = new Vue({
+  el: '#upcoming',
+  data: {
+    bills: []
+  },
+  methods: {
+    loadBills: function() {
+        this.$http.get('/api/get_me_recent').then(function(res) {
+            this.bills = res['body']['recent']
+        });
+    }
+  },
+  delimiters: ['{/', '/}']
+})
+
+upcoming.loadBills();
+

@@ -19,22 +19,14 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Topic</th>
+            <th>Committee</th>
             <th>Bill Title</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Energy</td>
-            <td>Make Infinite Energy</td>
-          </tr>
-          <tr>
-            <td>Food</td>
-            <td>Eat More</td>
-          </tr>
-          <tr>
-            <td>Happy</td>
-            <td>Gib hubs</td>
+          <tr v-for="bill in bills">
+            <td>{/ bill[0]['committees'] /}</td>
+            <td>{/ bill[0]['title'] /}</td>
           </tr>
         </tbody>
       </table>
@@ -45,7 +37,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Topic</th>
+            <th>Committee</th>
             <th>Bill Title</th>
             <th>Result</th>
           </tr>
