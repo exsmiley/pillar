@@ -1,30 +1,42 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="header clearfix">
-  <h3 class="text-muted">PILLAR</h3>
+	<h3 class="text-muted">PILLAR</h3>
 </div>
 <hr>
 <h2>Your Senators</h2>
-<table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>District</th>
-            <th>Party</th>
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody id="act">
-			<tr v-for="rep in reps">
-			    <td>{/ rep[0]['name'] /}</td>
-			    <td>{/ rep[0]['role'] /}</td>
-			    <td>{/ rep[0]['district'] /}</td>
-			    <td>{/ rep[0]['party'] /}</td>
-			    <td>{/ rep[0]['phone'] /}</td>
-			</tr>
-		</tbody>
+<!--
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading">Senator Name</div>
+		<div class="panel-body">blabla</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Senator Name</div>
+		<div class="panel-body">Panel Content</div>
+	</div>
+</div>
+-->
+<!--
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Role</th>
+		<th>District</th>
+		<th>Party</th>
+		<th>Phone</th>
+	</tr>
+</thead>
+<tbody id="act">
+	<tr v-for="rep in reps">
+		<td>{/ rep[0]['name'] /}</td>
+		<td>{/ rep[0]['role'] /}</td>
+		<td>{/ rep[0]['district'] /}</td>
+		<td>{/ rep[0]['party'] /}</td>
+		<td>{/ rep[0]['phone'] /}</td>
+	</tr>
+</tbody>
 <br>
-
+-->
 
 {% endblock %}
