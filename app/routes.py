@@ -30,32 +30,34 @@ def home():
 def signup_render():
     return render_template('signup.html')
 
+@app.route('/logout')
+def logout():
+    del session['username']
+    return render_template('home.html')
+
 
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    name, pwd, phone, zipcode = request.form['name'], request.form['pwd'], request.form['phone'], request['zip']
+    name, pwd, phone, zipcode = request.json['email'], request.json['email'], request.json['phone'], request.json['zipcode']
     new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
         session['username'] = request.form['name']
-        return redirect("/dashboard", code=302)
+        return jsonify({"route": "/"})
     else:
-        return render_template('home.html')
+        return jsonify({"route": "/signup"})
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    print request.json
     email, pwd = request.json['email'], request.json['password']
     new_acc = validate_user(email, pwd)
-    print new_acc
     if new_acc:
         session['username'] = request.json['email']
 
         return jsonify({"route": "/dashboard"})
         # return redirect("/dashboard", code=302)
     else:
-        print "dude"
-        return jsonify({"route": "/dashboard"})
+        return jsonify({"route": "/"})
         # return render_template('home.html')
 
 @app.route('/dashboard', methods=['POST', 'GET'])

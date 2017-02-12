@@ -28,5 +28,5 @@ function openTab(evt, tabName) {
 $(document).ready(function(){
     document.getElementById('Current').style.display = "block";
     evt.currentTarget.className += " active";
-}
+})
 }
