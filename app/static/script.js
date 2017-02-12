@@ -1,12 +1,5 @@
-var apiURL = 'http://localhost:5000//api/get_recent';
+var apiURL = 'http://localhost:5000/api/get_recent';
 
-new Vue({
-    el: '#app',
-    data: {
-        message: "bob"
-    },
-    delimiters: ['{/','/}']
-});
 
 $(function() {
     $('button').click(function() {
