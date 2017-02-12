@@ -2,6 +2,7 @@ import requests
 import copy
 import json
 from dbagent import *
+from sms import *
 
 
 def get_state_senators(stateAbbrv):
@@ -79,7 +80,7 @@ def add_recent_bills(committee_map):
     """
     Clears all recent bills and replaces them. Adds to the collection of all bills
     """
-    db = get_main_db(read_only=True)
+    db = get_main_db(read_only=False)
     recent = db.recent
     bills = db.bills
 
@@ -115,6 +116,27 @@ def get_all_recent_bills():
     return json.dumps(bills)
 
 
+def get_recent_bills_by_committee():
+    """
+    Gets a list of dicts of all of the recent bills
+    """
+    db = get_main_db()
+    recent = db.recent
+    com = {}
+    cursor = recent.find()
+
+    for b in cursor:
+        bill_copy = copy.deepcopy(b)
+        del bill_copy["_id"]
+        c = bill_copy['committees'].replace('House', '').replace('Senate', '').replace('&#39;', '\'').strip()
+
+        try:
+            com[c].append(bill_copy)
+        except:
+            com[c] = [bill_copy]
+    return json.dumps(com)
+
+
 def get_my_reps(zipcode):
     """
     Gets all representatives/senators for the zip code
@@ -126,10 +148,64 @@ def get_my_reps(zipcode):
     print result
 
 
+def text_message_body(user, topics):
+    """
+    Gets the body of the text message based on the number of topics
+    user: user object
+    topics: list of updated topics
+    @return string message
+    """
+    try:
+        name = user['email'][:user['email'].index('@')]
+    except:
+        name = user['email']
+
+    topic_str = ""
+
+    if len(topics) == 1:
+        topic_str = topics
+    elif len(topics) == 2:
+        topic_str = topics[0] + " and " + topics[1]
+    else:
+        topic_str = ", ".join(topics[:-1]) + ", and " + topics[-1]
+
+    link = "https://google.com"
+    message = "Hi %s! New developments in the %s! %s" % (user['email'], topic_str, link)
+    return message
+
+
+def send_texts_to_users():
+    comm = get_recent_bills_by_committee()
+
+    # now get all users
+    db = get_main_db()
+    users = db.users
+    user_iter = users.find({"phone number": {"$ne": "null"}})
+
+    for user in user_iter:
+        print user
+        topics = []
+
+        for t in user["topics"]:
+            if t in comm:
+                topics.append(t)
+
+        if len(topics) > 0:
+            print topics
+            message = text_message_body(user, topics)
+            print message
+            try:
+                send_message(user['phone'], message)
+                print "sent message"
+            except:
+                pass
+
+
+
 def main():
-    # com = load_recent_bills()
-    # add_recent_bills(com)
-    print len(get_all_recent_bills())
+    # load and update stuff
+    comm = load_recent_bills()
+    add_recent_bills(comm)
+    send_texts_to_users()
 
-
-# get_my_reps(91042)
+send_texts_to_users()
