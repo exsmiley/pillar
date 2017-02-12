@@ -1,3 +1,12 @@
+
+new Vue({
+    el: '#app',
+    data: {
+        message: "bob"
+    },
+    delimiters: ['{/','/}']
+});
+
 $(function() {
     $('button').click(function() {
         var user = $('#txtUsername').val();
