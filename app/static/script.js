@@ -1,6 +1,32 @@
 
 var apiURL = 'http://localhost:5000/api/get_recent';
 
+var loginapp = new Vue ({
+    el: '#loginapp',
+    data: {
+        email: "",
+        password: ""
+    },
+    methods: {
+        onSubmit: function(e) {
+            this.$http.post('http://localhost:5000/api/login', JSON.stringify({"email": this.email, "password": this.password}))
+        }
+    },
+    delimiters: ['{/', '/}']
+})
+
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    bills: [
+      { text: 'i am a bill' },
+      { text: 'i am a bill too' },
+      { text: 'oops wrong place i am a bob' }
+    ]
+  },
+  delimiters: ['{/', '/}']
+})
+
 $(document).ready(function(){
 var categories=["  Agriculture and Food",
 "Animals",
