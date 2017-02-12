@@ -39,7 +39,6 @@ def logout():
     del session['username']
     return redirect('/')
 
-
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
@@ -125,6 +124,10 @@ def get_reps_me():
 @app.route('/api/test', methods=['POST'])
 def tester():
     return jsonify(request.json)
+
+@app.route('/viz')
+def viz():
+    return render_template('viz2.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
