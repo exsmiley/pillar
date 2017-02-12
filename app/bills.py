@@ -5,19 +5,19 @@ from dbagent import *
 from sms import *
 
 
+api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
+headers = {'X-API-Key': api_key}
+
+
 def get_state_senators(stateAbbrv):
     """
     Gets the state senators information for the state
     """
-    api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
-    
     state = stateAbbrv
     chamber = "senate"
     senators = {}
     
     url = "https://api.propublica.org/congress/v1/members/%s/%s/current.json" % (chamber, state)
-
-    headers = {'X-API-Key': api_key}
 
     results = requests.get(url, headers=headers).json()['results']
     
@@ -36,8 +36,6 @@ def load_recent_bills():
     Gets the 20 most recent bills in the House and Senate and
     maps each committee to the bills associated with them
     """
-    api_key = "dNCaDByvPa8s2y9CjdNh15tDKOvQ3HS730R2GFJH"
-
     congress = "115"
     chambers = ["house", "senate"]
     status = "introduced"
@@ -46,8 +44,6 @@ def load_recent_bills():
     # populates each committee with the recent bills for it
     for chamber in chambers:
         url = "https://api.propublica.org/congress/v1/%s/%s/bills/%s.json" % (congress, chamber, status)
-
-        headers = {'X-API-Key': api_key}
 
         results = requests.get(url, headers=headers).json()['results'][0]
 
@@ -143,9 +139,28 @@ def get_my_reps(zipcode):
     """
     url = "http://whoismyrepresentative.com/getall_mems.php?zip=%s&output=json" % str(zipcode)
 
-    result = requests.get(url).json()['results']
+    people = requests.get(url).json()['results']
 
-    print result
+    reps = {}
+
+    for person in people:
+        if len(person['district']) > 0:
+            chamber, state, district = "house", person['state'], person['district']
+            url = "https://api.propublica.org/congress/v1/members/%s/%s/%s/current.json" % (chamber, state, district)
+            results = requests.get(url, headers=headers).json()['results']
+            for r in results:
+                if person['name'] == r['name']:
+                    r.update(person)
+                    reps[r['name']] = r
+        else:
+            chamber, state = "senate", person['state']
+            url = "https://api.propublica.org/congress/v1/members/%s/%s/current.json" % (chamber, state)
+            results = requests.get(url, headers=headers).json()['results']
+            for r in results:
+                if person['name'] == r['name']:
+                    r.update(person)
+                    reps[r['name']] = r
+    return reps.values()
 
 
 def text_message_body(user, topics):
@@ -175,6 +190,9 @@ def text_message_body(user, topics):
 
 
 def send_texts_to_users():
+    """
+    Sends texts to all users based on all recent bills
+    """
     comm = get_recent_bills_by_committee()
 
     # now get all users
@@ -183,7 +201,6 @@ def send_texts_to_users():
     user_iter = users.find({"phone number": {"$ne": "null"}})
 
     for user in user_iter:
-        print user
         topics = []
 
         for t in user["topics"]:
@@ -191,12 +208,9 @@ def send_texts_to_users():
                 topics.append(t)
 
         if len(topics) > 0:
-            print topics
             message = text_message_body(user, topics)
-            print message
             try:
                 send_message(user['phone'], message)
-                print "sent message"
             except:
                 pass
 
@@ -208,4 +222,6 @@ def main():
     add_recent_bills(comm)
     send_texts_to_users()
 
-send_texts_to_users()
+
+if __name__ == '__main__':
+    main()
