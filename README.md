@@ -7,3 +7,4 @@
 - Chän Phæm (Columbia)
 
 ![Cat](app/static/img/catloopjump.gif)
+![Cat](app/static/img/cattyping.gif)
