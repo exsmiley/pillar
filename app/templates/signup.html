@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-  <h2>Please Sign Up</h2>
-  <br>
-  <!--<script src="{{ url_for('static', filename='script.js') }}"></script>-->
+<div class="header clearfix">
+<h3 class="text-muted"><a href="/">PILLAR</a></h3>
+</div>
+<h2>Please Sign Up</h2>
+<br>
+<!--<script src="{{ url_for('static', filename='script.js') }}"></script>-->
 
-   <div class="container">
- 
-         <form class="form-signin" action="/signUp" method="post" role="form">
-             <!--<h2 class="form-signin-heading">Please Sign Up </h2>-->
-             <input type="email" name="username" class="form-control" placeholder="Email address" required autofocus>
-             <input type="Password" name="password" class="form-control" placeholder="Password" required>
-             <input type="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+<div class="container jumbotron">
+	<form class="form-signin" action="/signUp" method="post" role="form">
+		<!--<h2 class="form-signin-heading">Please Sign Up </h2>-->
+		<input type="full name" name="full name" class="form-control" placeholder="Full Name" required>
+		<input type="email" name="username" class="form-control" placeholder="Email address" required autofocus>
+		<input type="phone" name="phone" class="form-control" placeholder="Phone Number (for text alerts)">
+		<input type="zip" name="zip" class="form-control" placeholder="ZIP Code">
+		<input type= Code"Password" name="password" class="form-control" placeholder="Password" required>
+		<input type="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
              <!--
              <datalist name="state">
 				<option value="AL">Alabama</option>
@@ -64,9 +69,7 @@
 				<option value="WV">West Virginia</option>
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
-			</datalist> -->
-
-			<!--<input type="-->
+			</datalist> 
 			<select list="state" class="form-control" placeholder="State" required>
 				<option value="No Selection">No Selection</option>
 				<option value="AL">Alabama</option>
@@ -120,7 +123,7 @@
 				<option value="WV">West Virginia</option>
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
-			</select>
+			</select> -->
 
 			<!-- <input type="text" id="ajax" list="state" placeholder="State" class="form-control" required> -->
 			<!--<input type="checkbox" name="issues" value="AnimalRights">Animal Rights<br>
@@ -129,14 +132,15 @@
 			<input type="checkbox" name="issues" value="AnimalRights">Tax Policy<br>
 			<input type="checkbox" name="issues" value="Environment">Military/Veterans<br>
 			<input type="checkbox" name="issues" value="Environment">Military/Veterans<br>-->
-			<h4> Select issues you care about: </h4>
+			<hr>
+			<div class="check">
+				<h4 style="color:#999"> Select issues you care about: </h4>
+					<div class="checkBoxContainer" style="text-align: left;"> </div>
+					<button class="btn btn-lg btn-primary btn-block" type="button">Register </button>
+				</form>
+				<br>
+			</div>
 
-			<div class="checkBoxContainer"> </div>
+		</div>
 
- 
-             <button class="btn btn-lg btn-primary btn-block" type="button">Register </button>
-         </form>
-      
-     </div>
-   
-{% endblock %}
+		{% endblock %}
