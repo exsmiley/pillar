@@ -2,7 +2,7 @@
 var apiURL = 'http://localhost:5000/api/get_recent';
 
 $(document).ready(function(){
-var categories=["Agriculture and Food",
+var categories=["  Agriculture and Food",
 "Animals",
 "Armed Forces and National Security",
 "Arts, Culture, Religion",
@@ -38,7 +38,7 @@ var categories=["Agriculture and Food",
 
 
 $.each(categories,function(index,value){
-    var checkbox="<input type='checkbox' id="+value+" value="+value+" name="+value+"><label for="+value+">"+value+"</label> <br>"
+    var checkbox="<input type='checkbox' class='x' value="+value+" name="+value+" style='padding-left: 10px; padding-right: 10px;'><label for="+value+">"+value+"</label> <br>"
     $(".checkBoxContainer").append($(checkbox));
 })
 
