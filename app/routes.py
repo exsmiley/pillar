@@ -52,6 +52,15 @@ def login():
     else:
         return render_template('home.html')
 
+@app.route('/dashboard', methods=['POST', 'GET'])
+def dashboard():
+    #name, pwd, phone = request.form['name'], request.form['pwd'], request.form['phone']
+    #new_acc = add_new_user(email, pwd, phone)
+    #if new_acc:
+    #    return redirect("/main", code=302)
+    #else:
+    return render_template('dashboard.html')
+
 
 # other API functions
 @app.route('/api/update_topics', methods=['POST'])
