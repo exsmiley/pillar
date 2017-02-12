@@ -8,6 +8,3 @@
 
 ![Cat](app/static/img/catloopjump.gif)
 ![Cat](app/static/img/cattyping.gif)
-![Cat](app/static/img/doggyflip.gif)
-![Cat](app/static/img/notepaper.jpg)
-![Cat](app/static/img/swegachu.gif)
