@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="header clearfix">
-	<h3 class="text-muted">PILLAR</h3>
+	<a href="/"><h3 class="text-muted">PILLAR</h3></a>
 </div>
 <hr>
 <h2>Your Senators</h2>
@@ -10,8 +10,17 @@
 <div class="panel-group" v-for="rep in reps">
 	<div class="panel panel-default">
 		<div class="panel-heading">{/ rep['name'] /}</div>
-		<div class="panel-body">{/ rep['role'] /}</div>
-	</div>
+		<div class="panel-body">
+    {/ rep['role'] /}, {/ rep['party'] /} <br>
+    <a v-bind:href="rep['link']"> Website</a>
+    <a v-bind:href="rep['times_topics_url']" v-if="rep['times_topics_url']">| NY Times Topics</a>
+      <div v-for="a of ['phone', 'office', 'next_election', 'twitter', 'youtube']">
+        
+        <div v-if="rep[a]">{/ (a[0].toUpperCase() + a.slice(1)).replace("_", " ") /} : {/ rep[a] /}</div>
+        </div>
+      </div>
+    </div>
+    
 
 </div>
 </div>
