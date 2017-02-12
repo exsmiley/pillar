@@ -25,18 +25,17 @@ def get_main_db(read_only=True):
 
 # graph = facebook.GraphAPI(access_token='406864109667730|9b6FiIu7UHbRIRo3U2yUD9fFGYM')
 
-def add_new_user(email, pwd, phone, zipcode):
+def add_new_user(email, pwd, phone, zipcode, name):
     """
     Creates a new user in the database
     @return True if created new user
     """
     hash_object = hashlib.sha256(pwd)
     hash_pwd = hash_object.hexdigest()
-    user = {"email": email, "pwd": hash_pwd, "phone": phone, "topics": [], "zipcode": zipcode}
+    user = {"email": email, "pwd": hash_pwd, "phone": phone, "topics": [], "zipcode": zipcode, "name": name}
 
     db = get_main_db(read_only=False)
     users = db.users
-    users.delete_many({})
 
     total = users.find({"email": email})
 
@@ -44,6 +43,7 @@ def add_new_user(email, pwd, phone, zipcode):
         return False
 
     users.insert_one(user)
+    print "Made " + email
     return True
 
 def add_topics_for_user(email, topics):

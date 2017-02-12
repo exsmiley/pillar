@@ -29,8 +29,11 @@ var signupapp = new Vue ({
         name: "",
         email: "",
         phone: "",
-        zip: "",
-        password: ""
+        zipcode: "",
+        password: "",
+        url: '/signup',
+        categories : ['Ways and Means', 'Oversight and Government Reform', 'Natural Resources', 'Energy and Natural Resources', 'Indian Affairs', 'Small Business and Entrepreneurship', 'Transportation and Infrastructure', 'Administration', 'Judiciary', 'Homeland Security and Governmental Affairs', 'Energy and Commerce', 'Health, Education, Labor, and Pensions', 'Banking, Housing, and Urban Affairs', "Veterans' Affairs", 'Commerce, Science, and Transportation', 'Education and the Workforce', 'Armed Services', 'Agriculture', 'Foreign Relations', 'Finance'],
+        selected : []
     },
     methods: {
         registerUser: function(e) {
@@ -39,13 +42,27 @@ var signupapp = new Vue ({
                 "email": this.email,
                 "phone": this.phone,
                 "zipcode": this.zipcode,
-                "password": this.password})).then(function(post){
-                
+                "topics": this.selected,
+                "password": this.password,})).then(function(post){
+                this.url = '/'
+                console.log(this.url)
+                router.go(this.url)
                 /// Something like.... router.redirect('/')
-            });
+            }).catch(function() {
+                    alert("AHHHH")
+                });
+        },
+        toggle: function(category) {
+            var i = this.selected.indexOf(category)
+            if( i >= 0) {
+                this.selected.splice(i, 1);
+            }
+            else {
+                this.selected.push(category)
+            }
         }
-    }
-
+    },
+    delimiters: ['{/', '/}']
 })
 
 var app4 = new Vue({
@@ -60,78 +77,4 @@ var app4 = new Vue({
   delimiters: ['{/', '/}']
 })
 
-$(document).ready(function(){
-// var categories=["  Agriculture and Food",
-// "Animals",
-// "Armed Forces and National Security",
-// "Arts, Culture, Religion",
-// "Civil Rights and Liberties, Minority Issues",
-// "Commerce",
-// "Congress",
-// "Crime and Law Enforcement",
-// "Economics and Public Finance",
-// "Education",
-// "Emergency Management",
-// "Energy",
-// "Environmental Protection",
-// "Families",
-// "Finance and Financial Sector",
-// "Foreign Trade and International Finance",
-// "Government Operations and Politics",
-// "Health",
-// "Housing and Community Development",
-// "Immigration",
-// "International Affairs",
-// "Labor and Employment",
-// "Law",
-// "Native Americans",
-// "Public Lands and Natural Resources",
-// "Science, Technology, Communications",
-// "Social Sciences and History",
-// "Social Welfare",
-// "Sports and Recreation",
-// "Taxation",
-// "Transportation and Public Works",
-// "Water Resources Development",
-// ]
-var categories = ['Ways and Means', 'Oversight and Government Reform', 'Natural Resources', 'Energy and Natural Resources', 'Indian Affairs', 'Small Business and Entrepreneurship', 'Transportation and Infrastructure', 'Administration', 'Judiciary', 'Homeland Security and Governmental Affairs', 'Energy and Commerce', 'Health, Education, Labor, and Pensions', 'Banking, Housing, and Urban Affairs', "Veterans' Affairs", 'Commerce, Science, and Transportation', 'Education and the Workforce', 'Armed Services', 'Agriculture', 'Foreign Relations', 'Finance']
 
-
-$.each(categories,function(index,value){
-    var checkbox="<input type='checkbox' class='x' value="+value+" name="+value+" style='padding-left: 10px; padding-right: 10px;'><label for="+value+">"+value+"</label> <br>"
-    $(".checkBoxContainer").append($(checkbox));
-})
-
-
-$(function() {
-    $('button').click(function() {
-        var user = $('#txtUsername').val();
-        var pass = $('#txtPassword').val();
-        var confirmPass = $('#txtconfirmPassword').val();
-        var state = $('#txtState').val();
-/*        $.ajax({
-            url: '/signUp',
-            data: $('form').serialize(),
-            type: 'POST',
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });*/
-
-        var dataList = document.getElementById('state');
-        var input = document.getElementById('ajax');
-
-        $.ajax({
-            url: '{{ url_for("autocomplete") }}'
-            }).done(function (data) {
-                $('#autocomplete').autocomplete({
-                    source: data.json_list,
-                    minLength: 2
-                });
-            });
-        });
-    });
-});

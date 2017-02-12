@@ -4,7 +4,7 @@ import os
 from bills import *
 from dbagent import *
 
-app = Flask(__name__)
+app = Flask(__name__) # Pillar12!
 
 # set the secret key.  keep this really secret:
 app.secret_key = hashlib.sha256("I'm a cool bruh").hexdigest()
@@ -29,6 +29,8 @@ def home():
 
 @app.route('/signup')
 def signup_render():
+    if 'username' in session:
+        return redirect('/dashboard')
     return render_template('signup.html')
 
 @app.route('/logout')
@@ -40,10 +42,11 @@ def logout():
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    name, email, phone, zipcode, pwd = request.json['name'], request.json['email'], request.json['phone'], request.json['zipcode', request.json['password']]
-    new_acc = add_new_user(email, pwd, phone, zipcode)
+    name, email, phone, zipcode, pwd = request.json['name'], request.json['email'], request.json['phone'], request.json['zipcode'], request.json['password']
+    new_acc = add_new_user(email, pwd, phone, zipcode, name)
     if new_acc:
-        session['username'] = request.json['email']
+        session['username'] = email
+        add_topics_for_user(email, request.json['topics'])
         return redirect('/')
     else:
         return redirect('/signup')
@@ -57,10 +60,8 @@ def login():
         session['username'] = request.json['email']
 
         return redirect('/dashboard')
-        # return redirect("/dashboard", code=302)
     else:
         return redirect('/')
-        # return render_template('home.html')
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
@@ -94,11 +95,9 @@ def get_recent_api():
 
 @app.route('/api/test', methods=['POST'])
 def tester():
-    print request.json
     return jsonify(request.json)
   
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    # app.run()
