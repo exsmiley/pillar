@@ -1,3 +1,4 @@
+var apiURL = 'http://localhost:5000//api/get_recent';
 
 new Vue({
     el: '#app',
@@ -23,4 +24,7 @@ $(function() {
             }
         });
     });
+    $('#signup').click(function() {
+        window.location = "www.example.com/index.php?id=" + this.id;
+    })
 });
