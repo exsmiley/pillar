@@ -40,13 +40,14 @@ def logout():
 # sign up/login
 @app.route('/api/signup', methods=['POST'])
 def signup():
-    name, pwd, phone, zipcode = request.json['email'], request.json['email'], request.json['phone'], request.json['zipcode']
+    name, email, phone, zipcode, pwd = request.json['name'], request.json['email'], request.json['phone'], request.json['zipcode', request.json['password']]
     new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
-        session['username'] = request.form['name']
+        session['username'] = request.json['email']
         return redirect('/')
     else:
         return redirect('/signup')
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
