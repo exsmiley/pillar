@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, make_response, session, redirect, url_for
 import hashlib
 import os
+import json
 from bills import *
 from dbagent import *
 
@@ -57,7 +58,7 @@ def login():
     email, pwd = request.json['email'], request.json['password']
     new_acc = validate_user(email, pwd)
     if new_acc:
-        session['username'] = request.json['email']
+        session['username'] = email
 
         return redirect('/dashboard')
     else:
@@ -81,8 +82,8 @@ def legislation():
 # other API functions
 @app.route('/api/get_topics')
 def get_topics():
-    email, topics = session['username'], request.form['topics']
-    add_topics_for_user(email, topics)
+    email = session['username']
+    get_topics_for_user(email)
 
 @app.route('/api/update_topics', methods=['POST'])
 def update_topics():
@@ -92,6 +93,24 @@ def update_topics():
 @app.route('/api/get_recent')
 def get_recent_api():
     return get_all_recent_bills()
+
+@app.route('/api/get_me_recent')
+def get_recent_me():
+    email = session['username']
+    com = json.loads(get_recent_bills_by_committee())
+    topics = set(json.loads(get_topics_for_user(email)))
+    relevant = []
+    for c, v in com.iteritems():
+        if c in topics:
+            relevant.append(v)
+
+    return jsonify({"recent": relevant})
+
+@app.route('/api/get_me_reps')
+def get_reps_me():
+    email = session['username']
+    zipcode = user_zipcode(email)
+    return jsonify({"reps": get_my_reps(zipcode)})
 
 @app.route('/api/test', methods=['POST'])
 def tester():

@@ -78,4 +78,14 @@ def validate_user(email, pwd):
     exists = users.find({"email": email, "pwd": hash_pwd})
     return exists.count() == 1
 
+
+def user_zipcode(email):
+    db = get_main_db()
+    users = db.users
+    results = users.find({"email": email})
+
+    for i in results:
+        return i['zipcode']
+
+
 add_topics_for_user("bob@bob.com", ['Ways and Means', 'Finance', "Indian Affairs"])
