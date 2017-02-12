@@ -8,8 +8,7 @@
   <div class="jumbotron">
     <h2>See bills related to you!</h2>
     <div id='loginapp'>
-      <form class="form-signin" method="post" v-on:submit="onSubmit">
-      {/ password /}
+      <form class="form-signin" v-on:submit.prevent="onSubmit">
         <input type="email" name="username" class="form-control" placeholder="Email address" required autofocus v-model="email">
         <input type="password" name="password" class="form-control" placeholder="Password" required v-model="password">
         <p><button class="btn btn-lg btn-success" role="button">Sign in</button></p>

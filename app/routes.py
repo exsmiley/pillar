@@ -23,7 +23,7 @@ def add_header(r):
 @app.route('/')
 def home():
     if 'username' in session:
-        return redirect("/main", code=302)
+        return render_template("dashboard.html")
     return render_template('home.html')
 
 @app.route('/signup')
@@ -38,21 +38,25 @@ def signup():
     new_acc = add_new_user(email, pwd, phone, zipcode)
     if new_acc:
         session['username'] = request.form['name']
-        return redirect("/main", code=302)
+        return redirect("/dashboard", code=302)
     else:
         return render_template('home.html')
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    
-    name, pwd = request.form['email'], request.form['password']
-    print name, pwd
-    new_acc = validate_user(email, pwd, phone)
+    print request.json
+    email, pwd = request.json['email'], request.json['password']
+    new_acc = validate_user(email, pwd)
+    print new_acc
     if new_acc:
-        session['username'] = request.form['email']
-        return redirect("/main", code=302)
+        session['username'] = request.json['email']
+
+        return jsonify({"route": "/dashboard"})
+        # return redirect("/dashboard", code=302)
     else:
-        return render_template('home.html')
+        print "dude"
+        return jsonify({"route": "/dashboard"})
+        # return render_template('home.html')
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
@@ -78,6 +82,11 @@ def update_topics():
 @app.route('/api/get_recent')
 def get_recent_api():
     return get_all_recent_bills()
+
+@app.route('/api/test', methods=['POST'])
+def tester():
+    print request.json
+    return jsonify(request.json)
   
 
 if __name__ == '__main__':

@@ -1,4 +1,7 @@
 
+Vue.use(VueRouter);
+
+var router = new VueRouter() ;
 var apiURL = 'http://localhost:5000/api/get_recent';
 
 var loginapp = new Vue ({
@@ -9,7 +12,12 @@ var loginapp = new Vue ({
     },
     methods: {
         onSubmit: function(e) {
-            this.$http.post('http://localhost:5000/api/login', JSON.stringify({"email": this.email, "password": this.password}))
+            this.$http.post('/api/login', JSON.stringify({"email": this.email, "password": this.password})).then(function(post){
+                console.log(post['body']['route'])
+                var r = post['body']['route']
+                router.go(r)
+                /// Something like.... router.redirect('/')
+            });
         }
     },
     delimiters: ['{/', '/}']
