@@ -4,11 +4,11 @@
 	<a href="/"><h3 class="text-muted">PILLAR</h3></a>
 </div>
 <hr>
-<h2>Your Senators</h2>
+<h2>Your Senators</h2> <br>
 <div id='act'>
 
 <div class="panel-group" v-for="rep in reps">
-	<div class="panel panel-default">
+	<div class="panel panel-default panel-primary">
 		<div class="panel-heading">{/ rep['name'] /}</div>
 		<div class="panel-body">
     {/ rep['role'] /}, {/ rep['party'] /} <br>
@@ -16,15 +16,17 @@
     <a v-bind:href="rep['times_topics_url']" v-if="rep['times_topics_url']">| NY Times Topics</a>
       <div v-for="a of ['phone', 'office', 'next_election', 'twitter', 'youtube']">
         
-        <div v-if="rep[a]">{/ (a[0].toUpperCase() + a.slice(1)).replace("_", " ") /} : {/ rep[a] /}</div>
+        <div v-if="rep[a]">{/ (a[0].toUpperCase() + a.slice(1)).replace("_", " ") /}: {/ rep[a] /}</div>
         </div>
       </div>
     </div>
-    
-
 </div>
 </div>
+<hr>
+<a href="/"><button class="btn btn-lg btn-primary btn-block" type="button" style="background: red;">Back to Bills</button></a> <br>
+<a href="/logout"><button class="btn btn-lg btn-primary btn-block" type="button">Log Out</button></a>
+</div>
 
-<br>
+</div>
 
 {% endblock %}
