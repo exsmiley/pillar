@@ -12,8 +12,8 @@ def get_recent_api():
   return get_all_recent_bills()
 
 @app.route('/signup')
-def signup():
-	return render_template('layout.html')
+def about():
+  return render_template('signup.html')
 
 if __name__ == '__main__':
   app.run(debug=True)
