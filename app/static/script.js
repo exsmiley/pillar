@@ -94,3 +94,18 @@ var upcoming = new Vue({
 
 upcoming.loadBills();
 
+var act = new Vue({
+  el: '#act',
+  data: {
+    reps: []
+  },
+  methods: {
+    loadReps: function() {
+        this.$http.get('/api/get_me_reps').then(function(res) {
+            this.reps = res['body']['recent']
+        });
+    }
+  },
+  delimiters: ['{/', '/}']
+})
+

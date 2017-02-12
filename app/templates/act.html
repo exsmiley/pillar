@@ -4,5 +4,27 @@
   <h3 class="text-muted">PILLAR</h3>
 </div>
 <hr>
+<h2>Your Senators</h2>
+<table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>District</th>
+            <th>Party</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody id="act">
+			<tr v-for="rep in reps">
+			    <td>{/ rep[0]['name'] /}</td>
+			    <td>{/ rep[0]['role'] /}</td>
+			    <td>{/ rep[0]['district'] /}</td>
+			    <td>{/ rep[0]['party'] /}</td>
+			    <td>{/ rep[0]['phone'] /}</td>
+			</tr>
+		</tbody>
+<br>
+
 
 {% endblock %}
