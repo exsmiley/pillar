@@ -48,6 +48,10 @@ def signup():
     if new_acc:
         session['username'] = email
         add_topics_for_user(email, request.json['topics'])
+        try:
+            text_sign_up(email) # fail if invalid phone number
+        except:
+            pass
         return redirect('/')
     else:
         return redirect('/signup')

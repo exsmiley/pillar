@@ -149,17 +149,21 @@ def get_my_reps(zipcode):
             url = "https://api.propublica.org/congress/v1/members/%s/%s/%s/current.json" % (chamber, state, district)
             results = requests.get(url, headers=headers).json()['results']
             for r in results:
-                if person['name'] == r['name']:
+                bleh = r['name'].split()
+                n = " ".join([bleh[0], bleh[-1]])
+                if person['name'] == n:
                     r.update(person)
-                    reps[r['name']] = r
+                    reps[n] = r
         else:
             chamber, state = "senate", person['state']
             url = "https://api.propublica.org/congress/v1/members/%s/%s/current.json" % (chamber, state)
             results = requests.get(url, headers=headers).json()['results']
             for r in results:
-                if person['name'] == r['name']:
+                bleh = r['name'].split()
+                n = " ".join([bleh[0], bleh[-1]])
+                if person['name'] == n:
                     r.update(person)
-                    reps[r['name']] = r
+                    reps[n] = r
     return reps.values()
 
 
@@ -216,6 +220,16 @@ def send_texts_to_users():
             except:
                 pass
 
+
+def text_sign_up(email):
+    message = "Thank you for signing up for Pillar! We're excited to work with you in shaping American democracy!"
+
+    db = get_main_db()
+    users = db.users
+    user_iter = users.find({"email": email})
+
+    for user in user_iter:
+        send_message(user['phone'], message)
 
 
 def main():
